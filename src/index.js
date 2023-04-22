@@ -6,8 +6,8 @@ var config = {
     width: 1600,
     height: 1200,
     fps: 30,
-    // id: "",
-    id: "4ec56c4bca74019477a3fe847094540cd68bc3a88b8ccdfbf7265889b01a4028",
+    id: "",
+    // id: "4ec56c4bca74019477a3fe847094540cd68bc3a88b8ccdfbf7265889b01a4028",
   },
 };
 
