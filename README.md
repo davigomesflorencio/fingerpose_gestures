@@ -66,4 +66,4 @@ npm start
 
 ## Licence 📃
 
-[MIT](https://github.com/davigomesflorencio/fingerpose_gestures/LICENSE)
+[MIT](https://github.com/davigomesflorencio/fingerpose_gestures/blob/main/LICENSE)
