@@ -1,0 +1,3 @@
+node_modules/
+/recorded/package-lock.json
+.vscode/
