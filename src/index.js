@@ -2,12 +2,12 @@ import { gestures } from "./gestures.js";
 var config = {
   video: {
     width: 640,
-    height: 480,
+    height: 360,
     // width: 1600,
     // height: 1200,
     fps: 30,
-    id: "a3dc5cfceb7702555d7fe91a370b7c994e719f225ab9cbf7be4cdb69d05b1642",
-    // id: "4ec56c4bca74019477a3fe847094540cd68bc3a88b8ccdfbf7265889b01a4028",
+    // id: "a3dc5cfceb7702555d7fe91a370b7c994e719f225ab9cbf7be4cdb69d05b1642",
+    id: "4ec56c4bca74019477a3fe847094540cd68bc3a88b8ccdfbf7265889b01a4028",
   },
 };
 
@@ -107,7 +107,7 @@ async function main() {
       for (const keypoint of hand.keypoints) {
         const name = keypoint.name.split("_")[0].toString().toLowerCase();
         const color = landmarkColors[name];
-        drawPoint(ctx, keypoint.x, keypoint.y, 7, color);
+        drawPoint(ctx, keypoint.x, keypoint.y, 4, color);
       }
 
       const keypoints3D = hand.keypoints3D.map((keypoint) => [
