@@ -64,6 +64,23 @@ start application
 npm start
 ```
 
+## Config Webcam
+
+In the index.js file we can adjust some webcam settings such as Height, Width, Fps and Webcam Id available
+
+Change the webcam by modifying it with any available id shown in the application's interface as soon as it starts
+
+```sh
+var config = {
+  video: {
+    width: 1600,
+    height: 1200,
+    fps: 30,
+    id: "",
+  },
+};
+```
+
 ## Licence 📃
 
 [MIT](https://github.com/davigomesflorencio/fingerpose_gestures/blob/main/LICENSE)
