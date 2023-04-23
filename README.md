@@ -24,6 +24,13 @@ Step (2) and (3) are handled by [fingerpose](https://www.npmjs.com/package/finge
 <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white">
 
+## ✨ Screenshots
+
+<div style="display:flex;">
+<img src="assets/images/image1.jpg" width="200">
+<img src="assets/images/image2.jpg" width="200">
+</div>
+
 ## Gestures - Emoji + Strings
 
 | name        | emoji           |
