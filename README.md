@@ -1,4 +1,4 @@
-# Fingerpose Detect Gestures
+# Detect Fingerpose Gestures
 
 ## 🌟 About
 
