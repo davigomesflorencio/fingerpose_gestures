@@ -1,20 +1,27 @@
 const { GestureDescription, Finger, FingerCurl, FingerDirection } = window.fp;
 
-const thumbsUpGesture = new GestureDescription("thumbs_up");
-const thumbsDownGesture = new GestureDescription("thumbs_down");
-const rockGesture = new GestureDescription("rock"); // ✊️
-const paperGesture = new GestureDescription("paper"); // 🖐
-const scissorsGesture = new GestureDescription("scissors"); // ✌️
-const middleGesture = new GestureDescription("middle"); // 🖕
-const fazoLGesture = new GestureDescription("fazol"); //
-const okGesture = new GestureDescription("ok"); //
-const pinchingGesture = new GestureDescription("pinching"); //
-const painLeftGesture = new GestureDescription("painLeft"); //
-const topGesture = new GestureDescription("top"); //
-const showGesture = new GestureDescription("show");
-const yesGesture = new GestureDescription("yes");
-const hornGesture = new GestureDescription("horn");
-const rightHandGesture = new GestureDescription("rightHand");
+const icons = [
+  'thumbs_up', 'thumbs_down', 'rock', 'paper', 'paper', 'scissors', 'middle', 'fazol', 'ok', 'pinching',
+  'painLeft', 'top', 'show', 'yes', 'horn', 'rightHand'
+]
+
+const [
+  thumbsUpGesture,
+  thumbsDownGesture,
+  rockGesture,
+  paperGesture,
+  scissorsGesture,
+  middleGesture,
+  fazoLGesture,
+  okGesture,
+  pinchingGesture,
+  painLeftGesture,
+  topGesture,
+  showGesture,
+  yesGesture,
+  hornGesture,
+  rightHandGesture
+] = icons.map((icon) => new GestureDescription(icon))
 
 // -----------------------------------------------------------------------------
 // Thumb Up
