@@ -1,7 +1,7 @@
 const { GestureDescription, Finger, FingerCurl, FingerDirection } = window.fp;
 
 const icons = [
-  'thumbs_up', 'thumbs_down', 'rock', 'paper', 'paper', 'scissors', 'middle', 'fazol', 'ok', 'pinching',
+  'thumbs_up', 'thumbs_down', 'rock', 'paper', 'scissors', 'middle', 'fazol', 'ok', 'pinching',
   'painLeft', 'top', 'show', 'yes', 'horn', 'rightHand'
 ]
 
