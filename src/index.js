@@ -168,7 +168,7 @@ async function initCamera(width, height, fps, deviceIdentifier) {
 
       devices.forEach(function (item) {
         var li = document.createElement("li");
-        if (item.deviceId.length != 0) {
+        if (item.kind === "videoinput" && item.deviceId.length != 0) {
           console.log(item.label.toString() + " | " + item.deviceId.toString());
 
           li.appendChild(
@@ -216,8 +216,23 @@ function updateDebugInfo(data, hand) {
   }
 }
 
+function renderGestureList() {
+  const list = document.querySelector("#gesture-list");
+  for (const label of Object.values(gestureStrings)) {
+    const [emoji, ...words] = label.trim().split(/\s+/);
+    const li = document.createElement("li");
+    const icon = document.createElement("span");
+    icon.className = "gesture-emoji";
+    icon.textContent = emoji;
+    li.append(icon, words.join(" "));
+    list.appendChild(li);
+  }
+}
+
 // export function initEvent() {
 window.addEventListener("DOMContentLoaded", () => {
+  renderGestureList();
+
   initCamera(
     config.video.width,
     config.video.height,

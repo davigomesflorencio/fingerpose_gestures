@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
-  <title>FingerPose Example</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FingerPose Gestures</title>
+  <script>document.documentElement.classList.add("js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap"
+    rel="stylesheet">
 
   <!-- Require the peer dependencies of handpose. -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.22.0/dist/tf-core.js"></script>
@@ -20,75 +28,220 @@
   <script src="https://cdn.jsdelivr.net/npm/fingerpose@0.1.0/dist/fingerpose.min.js" type="text/javascript"></script>
 
   <style>
-    @font-face {
-      font-family: 'Roboto';
-      src: URL('font/roboto.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
+    :root {
+      --cream: #fdfbf7;
+      --paper: #fffefb;
+      --espresso: #2b2420;
+      --espresso-deep: #1c1815;
+      --muted: #7a6f66;
+      --sage: #7f9177;
+      --sage-soft: rgba(127, 145, 119, 0.14);
+      --hairline: rgba(43, 36, 32, 0.07);
+      --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+      --radius-shell: 2rem;
+      --bezel: 6px;
     }
 
-    @font-face {
-      font-family: 'Vina Sans';
-      src: URL('font/vina.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
-      user-select: none;
     }
 
     html,
     body {
-      font-family: 'Vina Sans';
+      margin: 0;
+      min-height: 100dvh;
+      background-color: var(--cream);
+      color: var(--espresso);
+      font-family: 'Neuton', serif;
       font-size: 18px;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #333333;
+      -webkit-font-smoothing: antialiased;
     }
 
-    body {
+    /* Film grain, fixed so it never repaints while scrolling */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 112px 40px 128px;
+    }
+
+    /* ---------- Eyebrow tags ---------- */
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--sage-soft);
+      color: var(--sage);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ---------- Header (editorial split) ---------- */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 96px;
+    }
+
+    .hero h1 {
+      margin: 24px 0 0;
+      font-size: clamp(56px, 8vw, 112px);
+      font-weight: 200;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--sage);
+    }
+
+    .hero-aside p {
+      margin: 0 0 32px;
+      max-width: 34ch;
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.5;
+    }
+
+    .stats {
+      display: flex;
+      gap: 40px;
       margin: 0;
       padding: 0;
+      list-style: none;
     }
 
-    option {
-      font-family: 'Roboto';
-      font-size: 18px;
+    .stats strong {
+      display: block;
+      font-size: 44px;
+      font-weight: 300;
+      line-height: 1;
     }
 
-    .container {
-      margin: 20px auto;
+    .stats span {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- Bento grid ---------- */
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .span-12 {
+      grid-column: span 12;
+    }
+
+    .span-8 {
+      grid-column: span 8;
+    }
+
+    .span-6 {
+      grid-column: span 6;
+    }
+
+    .span-4 {
+      grid-column: span 4;
+    }
+
+    /* ---------- Double-bezel cards ---------- */
+
+    .shell {
       display: flex;
+      padding: var(--bezel);
+      border-radius: var(--radius-shell);
+      background: rgba(43, 36, 32, 0.035);
+      box-shadow: 0 0 0 1px var(--hairline);
     }
 
-    .video,
-    .debug {
-      margin: auto;
-      width: 70%;
-      padding: 0 20px;
+    .core {
+      flex: 1;
+      min-width: 0;
+      padding: 32px;
+      border-radius: calc(var(--radius-shell) - var(--bezel));
+      background: var(--paper);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.9),
+        0 32px 64px -40px rgba(43, 36, 32, 0.28);
     }
 
-    table.summary {
-      border: 1px solid #333;
-      border-collapse: collapse;
+    .card-head {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
     }
 
-    table.summary td,
-    table.summary th {
-      border: 1px solid #333;
-      padding: 5px 8px;
+    .card-head h2 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+    }
+
+    /* ---------- Video stage ---------- */
+
+    .core.video-card {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 12px 12px 20px;
     }
 
     #video-container {
-      width: 640px;
-      height: 360px;
       position: relative;
-      margin: auto;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: calc(var(--radius-shell) - var(--bezel) - 6px);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(127, 145, 119, 0.22), transparent 55%),
+        var(--espresso-deep);
+    }
+
+    .stage-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(253, 251, 247, 0.5);
+      font-size: 20px;
+      font-style: italic;
     }
 
     .layer {
@@ -100,129 +253,270 @@
     }
 
     #pose-video {
+      object-fit: cover;
       transform: scaleX(-1);
     }
 
     .pose-result {
-      font-size: 80px;
+      padding: 20px;
+      font-size: clamp(18px, 2.6vw, 32px);
+      line-height: 1.2;
       text-align: right;
-      color: rgb(38, 41, 43);
-      /* color: rgb(28, 107, 12); */
-      padding: 20px 30px 0 0;
+      pointer-events: none;
     }
 
     #pose-result-left {
       text-align: left;
-      color: (38, 41, 43);
-      font-weight: 300;
     }
 
-    .row {
-      width: 100%;
+    .pose-result span {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: rgba(253, 251, 247, 0.94);
+      color: var(--espresso);
+      box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.45);
+    }
+
+    .video-meta {
       display: flex;
-      flex-direction: row;
-      justify-content: center;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 12px;
+      color: var(--muted);
+      font-size: 15px;
     }
 
-    .block {
-      width: 400px;
+    .video-meta .eyebrow {
+      background: rgba(127, 145, 119, 0.12);
     }
 
-    .spacer {
-      width: 20px;
+    /* ---------- Cameras ---------- */
+
+    #cameras {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
 
-    h2 {
-      text-align: center;
-      background-color: lightblue;
+    #cameras:empty::before {
+      content: "Waiting for camera permission…";
+      color: var(--muted);
+      font-style: italic;
     }
 
-    span {
-      background-color: lightblue;
+    #cameras li {
+      padding: 12px 16px;
+      border-radius: 1rem;
+      background: rgba(43, 36, 32, 0.03);
+      color: var(--espresso);
+      font-size: 14px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+      transition: background-color 500ms var(--ease-fluid), transform 500ms var(--ease-fluid);
+    }
+
+    #cameras li:hover {
+      background: var(--sage-soft);
+      transform: translateX(4px);
+    }
+
+    /* ---------- Gesture library ---------- */
+
+    #gesture-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #gesture-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--hairline);
+      font-size: 16px;
+    }
+
+    .gesture-emoji {
+      font-size: 20px;
+    }
+
+    /* ---------- Finger tables ---------- */
+
+    table.summary {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    table.summary th {
+      padding: 0 8px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    table.summary td {
+      padding: 12px 8px;
+      border-top: 1px solid var(--hairline);
+      font-size: 17px;
+    }
+
+    table.summary td:first-child {
+      width: 40px;
+      color: var(--muted);
+    }
+
+    table.summary span {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 999px;
+      background: rgba(43, 36, 32, 0.04);
+      font-size: 15px;
+    }
+
+    /* ---------- Scroll reveal ---------- */
+
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(48px);
+      filter: blur(10px);
+      transition:
+        opacity 900ms var(--ease-fluid),
+        transform 900ms var(--ease-fluid),
+        filter 900ms var(--ease-fluid);
+      transition-delay: var(--delay, 0ms);
+    }
+
+    .js .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+      }
+    }
+
+    /* ---------- Mobile collapse ---------- */
+
+    @media (max-width: 767px) {
+      .page {
+        padding: 64px 16px 96px;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+        margin-bottom: 56px;
+      }
+
+      .bento {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      #cameras {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .span-12,
+      .span-8,
+      .span-6,
+      .span-4 {
+        grid-column: auto;
+      }
+
+      .core {
+        padding: 24px 20px;
+      }
+
+      .pose-result {
+        padding: 12px;
+      }
+
+      .pose-result span {
+        padding: 6px 14px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="video">
-      <h2>Id of available cameras</h2>
-      <ul id="cameras">
-      </ul>
-    </div>
-  </div>
+  <main class="page">
 
-  <div class="container">
-    <div class="video">
-      <div id="video-container">
+    <header class="hero">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span>TensorFlow.js · Fingerpose</span>
+        <h1>Speak with <em>your hands.</em></h1>
+      </div>
+      <div class="hero-aside reveal" style="--delay: 120ms">
+        <p>Real-time gesture recognition straight from your webcam. Show a gesture and watch it come to life, for
+          both hands at once.</p>
+        <ul class="stats">
+          <li><strong>15</strong><span>Gestures</span></li>
+          <li><strong>2</strong><span>Hands</span></li>
+          <li><strong>21</strong><span>Landmarks</span></li>
+        </ul>
+      </div>
+    </header>
 
-        <video id="pose-video" class="layer" playsinline></video>
-        <canvas id="pose-canvas" class="layer"></canvas>
-        <div id="pose-result-left" class="layer pose-result"></div>
-        <br>
-        <div id="pose-result-right" class="layer pose-result"></div>
+    <section class="bento">
 
+      <div class="shell span-8 reveal">
+        <div class="core video-card">
+          <div id="video-container">
+            <div class="stage-placeholder">Waiting for the camera…</div>
+            <video id="pose-video" class="layer" playsinline muted></video>
+            <canvas id="pose-canvas" class="layer"></canvas>
+            <div id="pose-result-left" class="layer pose-result"></div>
+            <div id="pose-result-right" class="layer pose-result"></div>
+          </div>
+          <div class="video-meta">
+            <span class="eyebrow"><span class="dot"></span>Live preview</span>
+            <span>Mirrored · MediaPipe Hands</span>
+          </div>
+        </div>
       </div>
 
-      <div class="row">
-        <div class="block">
-          <h2>Left Hand</h2>
+      <div class="shell span-4 reveal" style="--delay: 100ms">
+        <div class="core">
+          <div class="card-head">
+            <span class="eyebrow">Library</span>
+            <h2>Gestures to try</h2>
+          </div>
+          <ul id="gesture-list"></ul>
+        </div>
+      </div>
+
+      <div class="shell span-6 reveal">
+        <div class="core">
+          <div class="card-head">
+            <span class="eyebrow">Debug</span>
+            <h2>Left hand</h2>
+          </div>
           <table id="summary-left" class="summary">
             <thead>
               <tr>
                 <th>Idx</th>
                 <th>Finger</th>
-                <th style="width: 110px">Curl</th>
-                <th style="width: 170px">Direction</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>0</td>
-                <td>Thumb</td>
-                <td><span id="curl-0">-</span></td>
-                <td><span id="dir-0">-</span></td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Index</td>
-                <td><span id="curl-1">-</span></td>
-                <td><span id="dir-1">-</span></td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Middle</td>
-                <td><span id="curl-2">-</span></td>
-                <td><span id="dir-2">-</span></td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Ring</td>
-                <td><span id="curl-3">-</span></td>
-                <td><span id="dir-3">-</span></td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Pinky</td>
-                <td><span id="curl-4">-</span></td>
-                <td><span id="dir-4">-</span></td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- <br> -->
-        </div>
-        <div class="spacer">
-
-        </div>
-        <div class="block">
-          <h2>Right Hand</h2>
-          <table id="summary-right" class="summary">
-            <thead>
-              <tr>
-                <th>Idx</th>
-                <th>Finger</th>
-                <th style="width: 110px">Curl</th>
-                <th style="width: 170px">Direction</th>
+                <th>Curl</th>
+                <th>Direction</th>
               </tr>
             </thead>
             <tbody>
@@ -260,12 +554,83 @@
           </table>
         </div>
       </div>
-    </div>
 
-  </div>
+      <div class="shell span-6 reveal" style="--delay: 100ms">
+        <div class="core">
+          <div class="card-head">
+            <span class="eyebrow">Debug</span>
+            <h2>Right hand</h2>
+          </div>
+          <table id="summary-right" class="summary">
+            <thead>
+              <tr>
+                <th>Idx</th>
+                <th>Finger</th>
+                <th>Curl</th>
+                <th>Direction</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>Thumb</td>
+                <td><span id="curl-0">-</span></td>
+                <td><span id="dir-0">-</span></td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Index</td>
+                <td><span id="curl-1">-</span></td>
+                <td><span id="dir-1">-</span></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Middle</td>
+                <td><span id="curl-2">-</span></td>
+                <td><span id="dir-2">-</span></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Ring</td>
+                <td><span id="curl-3">-</span></td>
+                <td><span id="dir-3">-</span></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Pinky</td>
+                <td><span id="curl-4">-</span></td>
+                <td><span id="dir-4">-</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
+      <div class="shell span-12 reveal">
+        <div class="core">
+          <div class="card-head">
+            <span class="eyebrow">Devices</span>
+            <h2>Available cameras</h2>
+          </div>
+          <ul id="cameras"></ul>
+        </div>
+      </div>
 
+    </section>
+  </main>
 
+  <script>
+    // Fade cards up as they enter the viewport
+    const revealObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+  </script>
 
   <script src="./src/index.js" type="module">
   </script>
