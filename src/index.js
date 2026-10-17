@@ -50,7 +50,7 @@ async function createDetector() {
       runtime: "mediapipe",
       modelType: "full",
       maxHands: 2,
-      solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915`,
+      solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240`,
     }
   );
 }
