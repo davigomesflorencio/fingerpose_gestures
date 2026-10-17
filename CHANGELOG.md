@@ -15,13 +15,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Moved the TensorFlow.js scripts from unpkg to the jsDelivr CDN.
 - Rewrote the README: current libraries and versions, webcam configuration, guide to adding gestures and the correct license (Apache 2.0).
 
+- Redesigned the interface: Neuton font, cream and sage palette, bento card layout, scroll reveal animations and a single-column layout on mobile.
+- The gesture list in the page is generated from `gestureStrings`.
+- The camera list shows only video inputs (it used to list audio devices too).
+- Camera ids in the list can be selected and copied.
+- New README screenshots of the redesigned interface (desktop and mobile).
+
 ### Fixed
 
+- The video is now `muted`, so the browser's autoplay policy no longer blocks `play()`.
 - Gestures from `scissors` onward were labeled with the previous gesture's name because `paper` appeared twice in the gesture name list. For example, ✌️ was shown as "🖐 Oi".
 
 ### Added
 
 - This changelog.
+- The `high-end-visual-design` agent skill for Claude Code (`.claude/skills/`, tracked in `skills-lock.json`).
 
 ## 2023-05-01
 

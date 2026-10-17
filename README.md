@@ -2,10 +2,9 @@
 
 Real-time hand gesture recognition in the browser. Point your webcam at your hands and the app shows an emoji and a label for each recognized gesture, for both hands at the same time.
 
-<div style="display:flex;">
-<img src="assets/images/image1.jpg" width="200">
-<img src="assets/images/image2.jpg" width="200">
-</div>
+<p>
+<img src="assets/images/t.png" alt="Desktop view detecting the OK gesture" height="300">
+</p>
 
 ## 🌟 About
 
