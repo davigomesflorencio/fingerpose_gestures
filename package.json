@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.27.11"
+    "browser-sync": "^3.0.4"
   }
 }
