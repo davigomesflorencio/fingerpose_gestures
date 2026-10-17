@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - The gesture list in the page is generated from `gestureStrings`.
 - The camera list shows only video inputs (it used to list audio devices too).
 - Camera ids in the list can be selected and copied.
+- New README screenshots of the redesigned interface (desktop and mobile).
 
 ### Fixed
 
